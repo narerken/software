@@ -4,7 +4,9 @@ package com.example.software.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,11 +30,11 @@ public class Item {
     @JoinColumn(name = "category_id")
     private Category category;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "item_category",
-//            joinColumns = @JoinColumn(name = "item_id"),
-//            inverseJoinColumns = @JoinColumn(name = "category_id")
-//    )
-//    private Set<Category> categories = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "item_country",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "country_id")
+    )
+    private List<Country> countries = new ArrayList<>();
 }
