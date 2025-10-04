@@ -1,11 +1,16 @@
 package com.example.software.service.impl;
 
+import com.example.software.dto.CategoryDto;
+import com.example.software.dto.CountryDto;
+import com.example.software.entity.Category;
 import com.example.software.entity.Country;
+import com.example.software.repository.CategoryRepository;
 import com.example.software.repository.CountryRepository;
 import com.example.software.service.CountryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,10 +18,23 @@ import java.util.List;
 public class CountryServiceImpl implements CountryService {
 
     private final CountryRepository countryRepository;
+    private final CategoryRepository categoryRepository;
+
+    private CountryDto toDto(Country country){
+        CountryDto countryDto = new CountryDto();
+        countryDto.setId(country.getId());
+        countryDto.setName(country.getName());
+        return countryDto;
+    }
 
     @Override
-    public List<Country> getAll() {
-        return countryRepository.findAll();
+    public List<CountryDto> getAll() {
+        List<Country> countries = countryRepository.findAll();
+        List<CountryDto> result = new ArrayList<>();
+        for(Country country : countries){
+            result.add(toDto(country));
+        }
+        return result;
     }
 
     @Override
